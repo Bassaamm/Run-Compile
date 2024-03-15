@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #a9abab;
+    --color-secondary: #474747;
+    --color-primaryBackground: #000000;
+    --color-correct: #10b981;
+    --color-wrong: #fca5a5;
+    --color-cursor: #ffffff;
+    --color-wrongcursor: #ef4444;
+  }
+  :root[data-theme="pink"] {
+    --color-primary: #f763b2;
+    --color-secondary: #6b325a;
+    --color-primaryBackground: #141017;
+  }
+}
+html {
+  font-family: Consolas, monaco, monospace;
+}
+@keyframes blink {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.blinking-cursor {
+  animation: blink 1s infinite;
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.6s linear forwards;
+}

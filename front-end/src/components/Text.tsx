@@ -1,40 +1,76 @@
 "use client";
+import { quotes } from "@/utils/quotes";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { GoDotFill } from "react-icons/go";
 
 export default function Text() {
-  const [text, setText] = useState("aaa aaa aaa aaa aaa");
+  const [quote, setQuote] = useState(quotes[0]);
   const [type, setType] = useState("");
   const [counter, setCounter] = useState(0);
-  const [truthArray, setTruthArray] = useState<boolean[]>([]);
+  const [truthList, setTruthList] = useState<boolean[]>([]);
+  const [time, setTime] = useState<number>(0.0);
+  let randomQuouteNum: number;
 
   useHotkeys("*", (event, handler) => {
-    setType((prev) => prev + event.key);
+    event.preventDefault();
+    if (event.key.length === 1) setType((prev) => prev + event.key);
   });
 
   useEffect(() => {
-    const textLetters = text.split("");
+    randomQuouteNum = Math.floor(Math.random() * quotes.length);
+    setQuote(quotes[randomQuouteNum]);
+  }, []);
+
+  useEffect(() => {
+    const textLetters = quote.quote.split("");
     const typeLetters = type.split("");
 
-    if (textLetters[counter] === typeLetters[counter]) {
+    if (textLetters.length >= typeLetters.length) {
+      if (typeLetters.length === 0) return;
+      let updatedTruthList = [...truthList];
+      updatedTruthList[counter] = textLetters[counter] === typeLetters[counter];
+
+      setTruthList(updatedTruthList);
+    }
+    if (typeLetters[counter] !== undefined) {
       setCounter(counter + 1);
-      setTruthArray((prev) => [...prev, true]);
-    } else if (typeLetters[counter]) {
-      setTruthArray((prev) => [...prev, false]);
     }
   }, [type]);
 
+  function resetState() {
+    setQuote(quotes[randomQuouteNum]);
+    setType("");
+    setCounter(0);
+    setTruthList([]);
+    setTime(0.0);
+  }
+
   return (
-    <div className="w-full flex justify-center mt-20">
+    <div className="w-full px-10 flex flex-col  max-w-4xl mx-auto items-start gap-12 justify-center mt-16 ">
       <div className="text-2xl">
-        {text.split("").map((letter, i) => (
-          <span
-            key={i}
-            className={truthArray[i] ? "text-green-500" : "text-red-500"}
-          >
-            {letter}
-          </span>
-        ))}
+        {quote.quote.split("").map((letter, i) => {
+          let className = "text-primary text-2xl leading-normal ";
+          if (truthList[i] === true)
+            className = `text-green-500 ${
+              letter === " " ? "border-b-2  w-10 border-green-500" : ""
+            }`;
+          if (truthList[i] === false)
+            className = `text-red-500 ${
+              letter === " " ? "border-b-2  w-10 border-red-500" : ""
+            }`;
+          if (i === counter) className += "blinking-cursor";
+          return (
+            <span key={i} className={className}>
+              {letter}
+            </span>
+          );
+        })}
+      </div>
+      <div className="flex text-lg gap-4 items-center text-secondary ">
+        <span>{quote.owner.name}</span>
+        <GoDotFill size={10} />
+        <span>{quote.owner.title}</span>
       </div>
     </div>
   );
