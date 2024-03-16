@@ -1,15 +1,26 @@
 "use client";
-import { useState } from "react";
+import useLocalStorage from "@/hooks/useLocalStorge";
+import { useEffect, useState } from "react";
 import { IoColorPaletteOutline } from "react-icons/io5";
+
+const key = "key";
+const initialValue = "";
 
 export default function ColorPalette() {
   const [isOpen, setIsOpen] = useState(false);
-  const colors = ["Red", "Green", "Blue", "Yellow", "Purple"];
+  const [value, setValue] = useLocalStorage(key, initialValue);
+  const colors = ["Pink", "Cyan", "DarkCyan", "green", "SkyBlue"];
 
+  function handleColorChange(color: string) {
+    document
+      .querySelector("html")
+      ?.setAttribute("data-theme", color.toLowerCase());
+    setValue(color.toLowerCase());
+  }
   return (
     <div className="relative text-left">
       <IoColorPaletteOutline
-        className="text-secondary cursor-pointer"
+        className="text-primary cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
         size={40}
       />
@@ -21,6 +32,7 @@ export default function ColorPalette() {
               <button
                 key={index}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => handleColorChange(color)}
               >
                 {color}
               </button>

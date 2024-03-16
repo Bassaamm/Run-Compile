@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { GoDotFill } from "react-icons/go";
 
-export default function Text() {
+export default function Text({ isTextOn }: { isTextOn: boolean }) {
   const [quote, setQuote] = useState(quotes[0]);
   const [type, setType] = useState("");
   const [counter, setCounter] = useState(0);
@@ -13,8 +13,11 @@ export default function Text() {
   let randomQuouteNum: number;
 
   useHotkeys("*", (event, handler) => {
-    event.preventDefault();
-    if (event.key.length === 1) setType((prev) => prev + event.key);
+    console.log(isTextOn);
+    if (!isTextOn) {
+      event.preventDefault();
+      if (event.key.length === 1) setType((prev) => prev + event.key);
+    }
   });
 
   useEffect(() => {
@@ -47,18 +50,18 @@ export default function Text() {
   }
 
   return (
-    <div className="w-full px-10 flex flex-col  max-w-4xl mx-auto items-start gap-12 justify-center mt-16 ">
+    <div className="w-full  px-10 flex flex-col cursor-default  max-w-4xl mx-auto items-start gap-12 justify-center mt-16 ">
       <div className="text-2xl">
         {quote.quote.split("").map((letter, i) => {
-          let className = "text-primary text-2xl leading-normal ";
+          let className = "text-secondary text-2xl leading-normal ";
           if (truthList[i] === true)
-            className = `text-green-500 ${
-              letter === " " ? "border-b-2  w-10 border-green-500" : ""
-            }`;
+            className = `text-correct 
+          `;
+          // ${letter === " " ? "border-b-2  w-10 border-green-500" : ""}
           if (truthList[i] === false)
-            className = `text-red-500 ${
-              letter === " " ? "border-b-2  w-10 border-red-500" : ""
-            }`;
+            className = `text-wrong 
+          `;
+          // ${letter === " " ? "border-b-2  w-10 border-red-500" : ""}
           if (i === counter) className += "blinking-cursor";
           return (
             <span key={i} className={className}>

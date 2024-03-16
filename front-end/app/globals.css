@@ -3,19 +3,53 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  html {
     --color-primary: #a9abab;
     --color-secondary: #474747;
     --color-primaryBackground: #000000;
-    --color-correct: #10b981;
-    --color-wrong: #fca5a5;
+    --color-correct: #1dfeb3;
+    --color-wrong: #ef4444;
     --color-cursor: #ffffff;
-    --color-wrongcursor: #ef4444;
   }
-  :root[data-theme="pink"] {
+  html[data-theme="pink"] {
     --color-primary: #f763b2;
     --color-secondary: #6b325a;
     --color-primaryBackground: #141017;
+    --color-correct: #f763b2;
+    --color-wrong: #ef4444;
+    --color-cursor: #ffffff;
+  }
+  html[data-theme="cyan"] {
+    --color-primary: #23f7df;
+    --color-secondary: #269e98;
+    --color-primaryBackground: #282f40;
+    --color-correct: #23f7df;
+    --color-wrong: #ef4444;
+    --color-cursor: #ffffff;
+  }
+  html[data-theme="darkcyan"] {
+    --color-primary: #40c5da;
+    --color-secondary: #b0aeae;
+    --color-primaryBackground: #2b4348;
+    --color-correct: #40c5da;
+    --color-wrong: #ef4444;
+    --color-cursor: #ffffff;
+  }
+  html[data-theme="green"] {
+    --color-primary: #435c53;
+    --color-secondary: #59756b;
+    --color-primaryBackground: #80d6ab;
+    --color-correct: #ffa600;
+    --color-wrong: #ef4444;
+    --color-cursor: #ffffff;
+  }
+  html[data-theme="skyblue"] {
+    --color-primary: #73c5e8;
+    --color-secondary: #88b0c2;
+    --color-primaryBackground: #bcebff;
+    --color-correct: #00b3ff;
+    --color-wrong: #ef4444;
+    --color-cursor: #ffffff;
   }
 }
 html {

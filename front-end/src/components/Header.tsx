@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div className="p-8">
       <div className="flex justify-between w-full text-secondary  mx-auto max-w-4xl ">
-        <FiType className="text-secondary" size={50} />
+        <FiType className="text-primary" size={50} />
         <ul>
           <li>
             <Link href=""></Link>

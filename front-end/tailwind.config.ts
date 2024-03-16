@@ -20,7 +20,7 @@ const config: Config = {
         correct: "var(--color-correct)",
         wrong: "var(--color-wrong)",
         cursor: "var(--color-cursor) ",
-        wrongcursor: "var(--color-wrongcursor)",
+        textcover: "var(--color-textcover)",
       },
       backgroundColor: {
         primaryBackground: "var(--color-primaryBackground)",
