@@ -4,6 +4,7 @@ import { quotes } from "@/utils/quotes";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { GoDotFill } from "react-icons/go";
+import Timer from "./Timer";
 
 export default function Text({
   isTextOn,
@@ -16,10 +17,16 @@ export default function Text({
   const [type, setType] = useState("");
   const [counter, setCounter] = useState(0);
   const [truthList, setTruthList] = useState<boolean[]>([]);
-  const { isActive, setIsActive, time } = useTimer();
+  const [timerOn, setTimerOn] = useState(false);
+  console.log(type);
+
   let randomQuouteNum: number;
   useHotkeys("*", (event, handler) => {
-    console.log(isTextOn);
+    if (quote.quote.length === type.length && type.length !== 0) {
+      setTimerOn(false);
+      return;
+    }
+    if (!timerOn) setTimerOn(true);
     if (!isTextOn) {
       event.preventDefault();
       if (event.key.length === 1) {
@@ -32,18 +39,19 @@ export default function Text({
   useEffect(() => {
     randomQuouteNum = Math.floor(Math.random() * quotes.length);
     setQuote(quotes[randomQuouteNum]);
-    setIsActive(true);
   }, []);
 
   useEffect(() => {
     const textLetters = quote.quote.split("");
     const typeLetters = type.split("");
 
+    if (textLetters.length === typeLetters.length) {
+      setTimerOn(false);
+    }
     if (textLetters.length >= typeLetters.length) {
       if (typeLetters.length === 0) return;
       let updatedTruthList = [...truthList];
       updatedTruthList[counter] = textLetters[counter] === typeLetters[counter];
-
       setTruthList(updatedTruthList);
     }
     if (typeLetters[counter] !== undefined) {
@@ -56,13 +64,12 @@ export default function Text({
     setType("");
     setCounter(0);
     setTruthList([]);
-    setIsActive(false);
+    setTimerOn(false);
   }
 
   return (
     <div className="w-full  px-10 flex flex-col cursor-default  max-w-4xl mx-auto items-start gap-12 justify-center mt-16 ">
-      <span className="text-slate-50 ml-[100%]">{time}</span>
-
+      <Timer timerOn={timerOn} />
       <div className="text-2xl">
         {quote.quote.split("").map((letter, i) => {
           let className = "text-secondary text-2xl leading-normal ";

@@ -1,14 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Text from "./Text";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useTimer } from "@/hooks/useTimer";
 
 export default function TextBlur() {
-  const [isBlurred, setIsBlurred] = useState(true);
-  console.log(isBlurred);
+  const [isBlurred, setIsBlurred] = useState(false);
+  useEffect(() => {
+    setIsBlurred(true);
+  }, []);
   useHotkeys("*", (event, handler) => {
     if (event.key === "Escape") setIsBlurred(true);
-    else setIsBlurred(!event.key);
+    else {
+      setIsBlurred(false);
+    }
   });
   return (
     <div className="max-w-4xl relative mx-auto px-4 py-4">
