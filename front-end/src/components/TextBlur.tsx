@@ -5,8 +5,10 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 export default function TextBlur() {
   const [isBlurred, setIsBlurred] = useState(true);
+  console.log(isBlurred);
   useHotkeys("*", (event, handler) => {
-    setIsBlurred(!event.key);
+    if (event.key === "Escape") setIsBlurred(true);
+    else setIsBlurred(!event.key);
   });
   return (
     <div className="max-w-4xl relative mx-auto px-4 py-4">
@@ -16,8 +18,8 @@ export default function TextBlur() {
           <div className="">Press ESC to stop</div>
         </div>
       )}
-      <div className={`${isBlurred ? "blur-sm" : ""}`}>
-        <Text isTextOn={isBlurred} />
+      <div className={`${isBlurred ? "blur-sm " : ""}`}>
+        <Text isTextOn={isBlurred} setIsTextOn={setIsBlurred} />
       </div>
     </div>
   );

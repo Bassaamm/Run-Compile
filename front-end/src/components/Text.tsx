@@ -1,28 +1,38 @@
 "use client";
+import { useTimer } from "@/hooks/useTimer";
 import { quotes } from "@/utils/quotes";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { GoDotFill } from "react-icons/go";
 
-export default function Text({ isTextOn }: { isTextOn: boolean }) {
+export default function Text({
+  isTextOn,
+  setIsTextOn,
+}: {
+  isTextOn: boolean;
+  setIsTextOn: (value: boolean) => void;
+}) {
   const [quote, setQuote] = useState(quotes[0]);
   const [type, setType] = useState("");
   const [counter, setCounter] = useState(0);
   const [truthList, setTruthList] = useState<boolean[]>([]);
-  const [time, setTime] = useState<number>(0.0);
+  const { isActive, setIsActive, time } = useTimer();
   let randomQuouteNum: number;
-
   useHotkeys("*", (event, handler) => {
     console.log(isTextOn);
     if (!isTextOn) {
       event.preventDefault();
-      if (event.key.length === 1) setType((prev) => prev + event.key);
+      if (event.key.length === 1) {
+        setType((prev) => prev + event.key);
+      }
     }
+    if (event.key === "Escape") resetState();
   });
 
   useEffect(() => {
     randomQuouteNum = Math.floor(Math.random() * quotes.length);
     setQuote(quotes[randomQuouteNum]);
+    setIsActive(true);
   }, []);
 
   useEffect(() => {
@@ -42,15 +52,17 @@ export default function Text({ isTextOn }: { isTextOn: boolean }) {
   }, [type]);
 
   function resetState() {
-    setQuote(quotes[randomQuouteNum]);
+    setQuote(quotes[0]);
     setType("");
     setCounter(0);
     setTruthList([]);
-    setTime(0.0);
+    setIsActive(false);
   }
 
   return (
     <div className="w-full  px-10 flex flex-col cursor-default  max-w-4xl mx-auto items-start gap-12 justify-center mt-16 ">
+      <span className="text-slate-50 ml-[100%]">{time}</span>
+
       <div className="text-2xl">
         {quote.quote.split("").map((letter, i) => {
           let className = "text-secondary text-2xl leading-normal ";
