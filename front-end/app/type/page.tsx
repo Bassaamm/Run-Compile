@@ -7,7 +7,7 @@ export default function TypePage() {
     <div className="h-screen w-full bg-primaryBackground text-grey-300">
       <Header />
       <Sections />
-      <TextBlur />
+      <Text />
     </div>
   );
 }

@@ -1,20 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
-import Text from "./Text";
-import { useHotkeys } from "react-hotkeys-hook";
-import { useTimer } from "@/hooks/useTimer";
-
-export default function TextBlur() {
-  const [isTextOn, setIsTextOn] = useState(false);
-  useEffect(() => {
-    setIsTextOn(true);
-  }, []);
-  useHotkeys("*", (event, handler) => {
-    if (event.key === "Escape") setIsTextOn(true);
-    else {
-      setIsTextOn(false);
-    }
-  });
+export default function TextBlur({
+  children,
+  isTextOn,
+}: {
+  children: React.ReactNode;
+  isTextOn: boolean;
+}) {
   return (
     <div className="max-w-4xl relative mx-auto px-4 py-4">
       {isTextOn && (
@@ -23,9 +13,7 @@ export default function TextBlur() {
           <div className="">Press ESC to stop</div>
         </div>
       )}
-      <div className={`${isTextOn ? "blur-sm " : ""}`}>
-        <Text isTextOn={isTextOn} setIsTextOn={setIsTextOn} />
-      </div>
+      <div className={`${isTextOn ? "blur-sm " : ""}`}>{children}</div>
     </div>
   );
 }

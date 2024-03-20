@@ -1,10 +1,13 @@
-function calcWPM(totalChars: number, timeInSec: number): number {
+export function calcWPM(allChars: number, timeInSec: number): number {
   const timeInMinutes = timeInSec / 60;
-  const words = totalChars / 5;
+  const words = allChars / 5;
   const wpm = words / timeInMinutes;
-  return wpm;
+  return Math.floor(wpm);
 }
-function calculateAccuracy(correctChars: number, totalCharsAttempted: number) {
+export function calcAccuracy(
+  correctChars: number,
+  totalCharsAttempted: number
+): number {
   const accuracy = (correctChars / totalCharsAttempted) * 100;
-  return accuracy.toFixed(2);
+  return Number(accuracy.toFixed(2));
 }

@@ -3,7 +3,7 @@ type Owner = {
   title: string;
 };
 
-type Quote = {
+export type Quote = {
   quote: string;
   owner: Owner;
 };
