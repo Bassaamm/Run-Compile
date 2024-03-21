@@ -1,47 +1,66 @@
+import { useTimer } from "@/hooks/useTimer";
 import { calcAccuracy, calcWPM } from "@/utils/helpers";
+import { useEffect, useState } from "react";
 import {
-  LineChart,
+  CartesianGrid,
+  Legend,
   Line,
+  LineChart,
+  RadarChart,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from "recharts";
 export default function Stats({
-  timerRef,
   truthList,
   isStatsOn,
+  timerOn,
 }: {
-  timerRef: React.MutableRefObject<number | undefined>;
   truthList: boolean[];
   isStatsOn: boolean;
+  timerOn: boolean;
 }) {
-  const data = [
-    {
-      name: "Page A",
-      uv: 1000,
-      pv: 10400,
-      amt: 10400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 10400,
-      amt: 2210,
-    },
-  ];
+  const [data, setData] = useState<
+    { name: string; wpm: number; accuracy: number; netWPM: number }[]
+  >([]);
+  const { seconds, setIsActive } = useTimer();
+
+  useEffect(() => {
+    if (timerOn === false) {
+      setIsActive(false);
+      return;
+    }
+    setIsActive(true);
+    const intervalId = setTimeout(() => {
+      let wpm = calcWPM(truthList.length, seconds);
+      let accuracy = calcAccuracy(
+        truthList.filter((truth) => truth === true).length,
+        truthList.length
+      );
+      setData((prevData) => [
+        ...prevData,
+        {
+          name: `${prevData.length + 1}`,
+          wpm,
+          accuracy,
+          netWPM: Math.floor((accuracy / 100) * wpm),
+        },
+      ]);
+    }, 2000);
+  }, [seconds, timerOn]);
 
   return (
     <div className="flex flex-col w-full justify-center items-start pl-14 mt-20">
       {isStatsOn && (
-        <div className="flex gap-10">
-          <div className="text-white ">
-            <div> {calcWPM(truthList.length, timerRef.current! / 1000)}</div>
+        <div className="flex gap-10 text-primary">
+          <div className=" ">
+            <div className="text-3xl font-semibold">
+              {" "}
+              {calcWPM(truthList.length, seconds)}
+            </div>
             <div className="flex gap-6">
               WPM
-              <span>
+              <span className="">
                 &#x2022;
                 {Math.floor(
                   truthList.filter((truth) => truth === true).length / 5
@@ -55,8 +74,8 @@ export default function Stats({
               </span>
             </div>
           </div>
-          <div className="text-white">
-            <div>
+          <div className="">
+            <div className="text-3xl font-semibold">
               {calcAccuracy(
                 truthList.filter((truth) => truth === true).length,
                 truthList.length
@@ -73,28 +92,38 @@ export default function Stats({
               </span>
             </div>
           </div>
-          <div className="text-white">
-            <div>
+          <div className="  ">
+            <div className="text-3xl font-semibold">
               {Math.floor(
                 (calcAccuracy(
                   truthList.filter((truth) => truth === true).length,
                   truthList.length
                 ) /
                   100) *
-                  calcWPM(truthList.length, timerRef.current! / 1000)
+                  calcWPM(truthList.length, seconds)
               )}
             </div>
-            <div className="flex gap-6">Net WPM</div>
+            <div>Net WPM</div>
           </div>
-          <div></div>
-          <div></div>
         </div>
       )}
-      <div>
-        <LineChart width={300} height={200} data={data} className="">
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={4} />
-        </LineChart>
-      </div>
+      {isStatsOn && (
+        <div className="mt-20 flex gap-16 justify-between items-center w-full">
+          <div className="text-4xl text-primary">Your Stat</div>
+          <div>
+            {" "}
+            <LineChart width={500} height={300} data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="wpm" stroke="#8884d8" />
+              <Line type="monotone" dataKey="accuracy" stroke="#82ca9d" />
+            </LineChart>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -16,14 +16,12 @@ export default function Text() {
   const [truthList, setTruthList] = useState<boolean[]>([]);
   const [timerOn, setTimerOn] = useState(false);
   const [isStatsOn, setIsStatsOn] = useState(false);
-  const timerRef = useRef<number>();
   let randomQuouteNum: number;
   useHotkeys("*", (event) => {
     if (type.length === quote.quote.length) {
       return;
     }
     if (!timerOn) {
-      timerRef.current = new Date().getTime();
       setTimerOn(true);
     }
     if (!isTextOn) {
@@ -55,7 +53,6 @@ export default function Text() {
 
     if (textLetters.length === typeLetters.length) {
       setTimerOn(false);
-      timerRef.current = new Date().getTime() - timerRef.current!;
       setIsStatsOn(true);
     }
     if (textLetters.length >= typeLetters.length) {
@@ -76,7 +73,6 @@ export default function Text() {
     setTruthList([]);
     setTimerOn(false);
   }
-
   return (
     <div className="w-full max-w-4xl mx-auto ">
       <TextBlur isTextOn={isTextOn}>
@@ -90,7 +86,8 @@ export default function Text() {
           </div>
         </div>
       </TextBlur>
-      <Stats timerRef={timerRef} truthList={truthList} isStatsOn={isStatsOn} />
+
+      <Stats truthList={truthList} isStatsOn={isStatsOn} timerOn={timerOn} />
     </div>
   );
 }

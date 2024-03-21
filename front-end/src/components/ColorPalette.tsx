@@ -3,19 +3,22 @@ import useLocalStorage from "@/hooks/useLocalStorge";
 import { useEffect, useState } from "react";
 import { IoColorPaletteOutline } from "react-icons/io5";
 
-const key = "key";
-const initialValue = "";
-
 export default function ColorPalette() {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useLocalStorage(key, initialValue);
-  const colors = ["Pink", "Cyan", "DarkCyan", "green", "SkyBlue"];
+  const [storedValue, setStoredValue] = useLocalStorage("color", "pink");
+  const colors = ["Pink", "Cyan", "DarkCyan", "green", "default"];
+
+  useEffect(() => {
+    document
+      .querySelector("html")
+      ?.setAttribute("data-theme", storedValue.toLowerCase());
+  }, [storedValue]);
 
   function handleColorChange(color: string) {
     document
       .querySelector("html")
       ?.setAttribute("data-theme", color.toLowerCase());
-    setValue(color.toLowerCase());
+    setStoredValue(color.toLowerCase());
   }
   return (
     <div className="relative text-left">
