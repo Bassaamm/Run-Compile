@@ -32,5 +32,15 @@ export function useTimer() {
   const displayTime = `${formatNumber(time.minutes)}:${formatNumber(
     time.seconds
   )}:${formatNumber(time.milliseconds)}`;
-  return { isActive, setIsActive, time: displayTime };
+  function reset() {
+    setTime({ minutes: 0, seconds: 0, milliseconds: 0 });
+  }
+  return {
+    isActive,
+    setIsActive,
+    time: displayTime,
+    seconds: time.seconds,
+    minutes: time.minutes,
+    reset,
+  };
 }
