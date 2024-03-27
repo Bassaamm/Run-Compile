@@ -1,10 +1,10 @@
 import { axiosIncPublic } from "@/utils/axiosPublic";
 
-export function IDEservice() {
-  const res = axiosIncPublic.post("ide/run", {
-    language: "javascript",
-    sourceCode: "console.log('Hello, world!')",
-    compiler: "javascript",
+export async function IDEservice({ language, sourceCode, compiler }: any) {
+  const res = await axiosIncPublic.post("ide/run", {
+    language,
+    sourceCode,
   });
-  console.log(res);
+  console.log(res.data);
+  return res.data;
 }
