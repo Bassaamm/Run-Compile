@@ -1,8 +1,8 @@
 "use client";
-import Header from "@/components/Header";
-import Sections from "@/components/Sections";
 import { useEffect, useState } from "react";
-
+import Header from "../../src/components/Header";
+import Sections from "../../src/components/Sections";
+import React from "react";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
@@ -10,7 +10,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
   return (
-    <>
+    <div>
+      {" "}
       {mounted && (
         <div className=" min-h-screen w-full bg-primaryBackground">
           <Header />
@@ -18,6 +19,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       )}
-    </>
+    </div>
   );
 }
