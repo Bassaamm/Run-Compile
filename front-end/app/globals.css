@@ -82,3 +82,18 @@ html {
 .slide-in {
   animation: slideIn 0.6s linear forwards;
 }
+:root {
+  --shadow: #eee;
+  --scrollbarBG: #eeeeee;
+  --thumbBG: #2241cf;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  box-shadow: 0 -100vh 0 100vh var(--shadow), 0 0 15px 5px black;
+}

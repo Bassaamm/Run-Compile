@@ -6,6 +6,7 @@ export default function EditorComponent({
   setEditorContent,
   isLoading,
 }: any) {
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   return (
     <div className="relative">
       {isLoading && (
@@ -21,7 +22,6 @@ export default function EditorComponent({
         defaultValue={selectLang.example}
         defaultLanguage={selectLang.language}
         onChange={(value: any) => {
-          console.log("onValueChange called with:", value);
           setEditorContent(value);
         }}
         options={{
