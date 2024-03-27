@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { IDErouter } from "./routes/IDERoute";
+import { IDErouter } from "./src/routes/IDERoute";
 dotenv.config();
 
 const app = express();
