@@ -39,7 +39,6 @@ export default function EditorComponent({
           formatOnPaste: true,
           dragAndDrop: true,
           autoIndent: "full",
-          highlightActiveIndentGuide: true,
         }}
       />
     </div>
