@@ -25,16 +25,11 @@ export const runCode = async (
   );
 
   const sourceFileName: any = `source.${extensions[language]}`;
-  // Create the source file
-  await fs.writeFile(
-    sourceFilePath,
-    sourceCode,
-    (err?: any, stdout?: any, stderr?: any) => {
-      if (err) {
-        console.log(err);
-      }
+  await fs.writeFile(sourceFilePath, sourceCode, (err?: any) => {
+    if (err) {
+      console.log(err);
     }
-  );
+  });
 
   const bashPath = path.join(folderPath, `run.sh`);
   let bashScript;
@@ -47,15 +42,11 @@ export const runCode = async (
     bashScript = `${compiler} ${sourceFileName}`;
   }
 
-  await fs.writeFile(
-    bashPath,
-    bashScript,
-    (err?: any, stdout?: any, stderr?: any) => {
-      if (err) {
-        console.log(err);
-      }
+  await fs.writeFile(bashPath, bashScript, (err?: any) => {
+    if (err) {
+      console.log(err);
     }
-  );
+  });
 
   const command = `docker run --rm -m=200m --memory-swap=250m --cpus=.5 --mount type=bind,source=${path.join(
     process.cwd(),

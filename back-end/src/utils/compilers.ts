@@ -1,10 +1,10 @@
 export const SANDBOX_NAME = "sandbox";
 
-export const SANDBOX_CONTSTRAINTS = {
-  RAM: "200m",
-  CPU: ".5",
-  VM_RAM: "250m",
-};
+// export const SANDBOX_CONTSTRAINTS = {
+//   RAM: "200m",
+//   CPU: ".5",
+//   VM_RAM: "250m",
+// };
 
 export const cppBashScript = `
 #!/bin/bash
