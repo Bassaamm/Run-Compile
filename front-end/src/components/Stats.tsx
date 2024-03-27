@@ -112,7 +112,7 @@ export default function Stats({
               <div>Net WPM</div>
             </div>
           </div>
-          <div className="flex items-center gap-10">
+          <div className="flex items-center pr-32">
             <GrPowerReset
               size={35}
               className="cursor-pointer"
@@ -122,7 +122,6 @@ export default function Stats({
                 setData([]);
               }}
             />
-            <div>Cancel</div>
           </div>
         </div>
       )}
@@ -138,19 +137,10 @@ export default function Stats({
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="wpm" stroke="#8884d8" />
+                <Line type="monotone" dataKey="netWPM" stroke="#8884d8" />
                 <Line type="monotone" dataKey="accuracy" stroke="#82ca9d" />
               </LineChart>
             </div>
-          </div>
-          <div className="flex flex-col gap-14">
-            <div className="text-primary text-4xl font-semibold">
-              Last 10 Runs
-            </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
           </div>
         </>
       )}
