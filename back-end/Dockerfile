@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
-# All my thanks goes to Abdulrahman Alotaibi for helping me understand running code in a sandbox 
-# from the client-side to the running it in an isolated instance using docker.
-MAINTAINER Abdulrahman Alotaibi
+
 
 # Updates the package lists for upgrades
 RUN apt-get update -y
