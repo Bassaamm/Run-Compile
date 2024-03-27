@@ -1,18 +1,4 @@
-const withCSS = require("@zeit/next-css");
-const withFonts = require("next-fonts");
-const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
 
-module.exports = withCSS(
-  withFonts({
-    webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-      config.plugins.push(
-        new MonacoWebpackPlugin({
-          languages: ["javascript", "typescript"],
-          filename: "static/[name].worker.js",
-        })
-      );
-
-      return config;
-    },
-  })
-);
+export default nextConfig;
