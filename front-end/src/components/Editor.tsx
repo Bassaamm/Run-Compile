@@ -1,5 +1,6 @@
 import { Spinner } from "@material-tailwind/react";
-import { Editor } from "@monaco-editor/react";
+
+import Editor from "@monaco-editor/react";
 
 export default function EditorComponent({
   selectLang,
