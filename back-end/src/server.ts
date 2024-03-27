@@ -14,5 +14,8 @@ app.use(
 );
 app.use(express.json());
 app.use("/ide", IDErouter);
+app.use("/checkapistatus", (req, res) => {
+  return res.json({ status: "API is working" });
+});
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
