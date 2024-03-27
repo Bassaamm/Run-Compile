@@ -1,6 +1,7 @@
 import { Spinner } from "@material-tailwind/react";
 
-import Editor from "@monaco-editor/react";
+import dynamic from "next/dynamic";
+const MonacoEditor = dynamic(import("react-monaco-editor"), { ssr: false });
 
 export default function EditorComponent({
   selectLang,
@@ -14,13 +15,25 @@ export default function EditorComponent({
           <Spinner className="h-10 w-10 text-blue-500/80" />
         </div>
       )}
-      <Editor
+      <MonacoEditor
         key={selectLang.language}
         className="bg-[#1f1f1f] border-t-2 border-secondary pt-4"
         height="30vh"
         theme="vs-dark"
         defaultValue={selectLang.example}
-        defaultLanguage={selectLang.language}
+        editorDidMount={() => {
+          window.MonacoEnvironment!.getWorkerUrl = (
+            _moduleId: string,
+            label: string
+          ) => {
+            if (label === "json") return "_next/static/json.worker.js";
+            if (label === "css") return "_next/static/css.worker.js";
+            if (label === "html") return "_next/static/html.worker.js";
+            if (label === "typescript" || label === "javascript")
+              return "_next/static/ts.worker.js";
+            return "_next/static/editor.worker.js";
+          };
+        }}
         onChange={(value: any) => {
           console.log("onValueChange called with:", value);
           setEditorContent(value);
@@ -40,7 +53,6 @@ export default function EditorComponent({
           formatOnPaste: true,
           dragAndDrop: true,
           autoIndent: "full",
-          highlightActiveIndentGuide: true,
         }}
       />
     </div>
