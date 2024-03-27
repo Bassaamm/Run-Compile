@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { IDErouter } from "./routes/IDERoute";
+import { IDErouter } from "./src/routes/IDERoute";
 dotenv.config();
 
 const app = express();
@@ -14,5 +14,8 @@ app.use(
 );
 app.use(express.json());
 app.use("/ide", IDErouter);
+app.use("/checkapistatus", (req, res) => {
+  return res.json({ status: "API is working" });
+});
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
