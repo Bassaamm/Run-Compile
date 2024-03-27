@@ -2,7 +2,6 @@ import { execShellCommand as exec } from "../utils/common";
 import {
   extensions,
   SANDBOX_NAME,
-  SANDBOX_CONTSTRAINTS,
   cppBashScript,
   cBashScript,
 } from "../utils/compilers";
@@ -18,7 +17,7 @@ export const runCode = async (
   compiler: string
 ) => {
   const folderPath = path.join("temp", id);
-  const dir = await mkdirp(folderPath);
+  await mkdirp(folderPath);
 
   const sourceFilePath = path.join(
     folderPath,

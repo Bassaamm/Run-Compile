@@ -1,5 +1,5 @@
 import express from "express";
-import { runCode } from "../controllers/IDEhandler";
+import { runCode } from "../controllers/IDEcontroller";
 
 export const IDErouter = express.Router();
 
